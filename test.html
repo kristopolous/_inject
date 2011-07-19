@@ -1,0 +1,10 @@
+<script src=_inject.js></script>
+<script>
+  (function(){
+    var internal = 1;
+    eval(_inject('ref'));
+    eval(_inject('ref'));
+  })();
+
+  document.write(_inject.ref('++internal'));
+</script>
