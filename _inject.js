@@ -14,7 +14,7 @@ var _inject = (function() {
 
     if(!scopeIn) { return list(); }
 
-    var scope = ix ? [scopeIn, ix].join('_') : scopeIn;
+    var scope = scopeIn + (ix || '');
 
     return _inject[scope] ? 
 
