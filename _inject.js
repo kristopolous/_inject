@@ -20,7 +20,7 @@ var _inject = (function() {
 
     if(!scopeIn) { return list(); }
 
-    var scope = scopeIn + (ix || '');
+    var scope = scopeIn + ( ix || '' );
 
     return _inject[scope] ? 
 
