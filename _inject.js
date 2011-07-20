@@ -16,32 +16,36 @@ var _inject = (function() {
     return ret;
   }
 
-  return function(scopeIn, ix){
+  return function(scopeIn, block){
+    var 
+      scope = scopeIn, 
+      ix = 0;
 
     if(!scopeIn) { return list(); }
+    if(block) { return _inject[scope](block); }
 
-    var scope = scopeIn + ( ix || '' );
+    // find a unique reference
+    while(_inject[scope]) {
+      scope = scopeIn + ix++;
+    }
 
-    return _inject[scope] ? 
+    return ('self._inject["' + scope + '"] = (' + (function() {
+       var _RAND_ = { 
+         that: arguments[0],
+         arg: Array.prototype.slice.call(arguments[1]) 
+       };
 
-      _inject(scopeIn, ( ix || 0 ) + 1) :
+       return function() {
+         _RAND_.block = arguments[0];
 
-      ('self._inject["' + scope + '"] = (' + (function() {
-         var _RAND_ = { 
-           that: arguments[0],
-           arg: Array.prototype.slice.call(arguments[1]) 
-         };
-
-         return function() {
-           _RAND_.block = arguments[0];
-
-           return (function () {
-             _RAND_.result = eval('(' + _RAND_.block + ')');
-             return 'function' === typeof _RAND_.result ? 
-               _RAND_.result.apply(_RAND_.that, _RAND_.arg) : 
-               _RAND_.result;
-           }).apply(_RAND_.that, _RAND_.arg);
-         }
-       })).replace(/_RAND_/g, '__INJECT__' + Math.random().toString().substr(2)) + ')(this, arguments)';
+         return (function () {
+           _RAND_.result = eval('(' + _RAND_.block + ')');
+           return 'function' === typeof _RAND_.result ? 
+             _RAND_.result.apply(_RAND_.that, _RAND_.arg) : 
+             _RAND_.result;
+         }).apply(_RAND_.that, _RAND_.arg);
+       }
+     }) + ')(this, arguments)')
+     .replace(/_RAND_/g, '__INJECT__' + Math.random().toString().substr(2)) 
   }
 })();
