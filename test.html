@@ -4,12 +4,13 @@
     var internal = 1;
     eval(_inject('ref'));
     eval(_inject('ref'));
-  })('arg');
+  })('a','b','c');
 
   document.write([
     _inject.ref('++internal'),
-    _inject.ref(function(){return (Array.prototype.slice.call(arguments)).join(' :: ')})
+    _inject.ref("Array.prototype.slice.call(arguments).join(' :: ')"),
+    _inject.ref(function(){return Array.prototype.slice.call(arguments).join(' :: ')})
   ].join('<br>'));
- 
+
 </script>
 

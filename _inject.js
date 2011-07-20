@@ -26,17 +26,20 @@ var _inject = (function() {
 
       _inject(scopeIn, ( ix || 0 ) + 1) :
 
-      ('self._inject[scope] = ' + function(block) {
-        var result = eval('(' + block + ')');
+      'self._inject["' + scope + '"] = (' + (function(_this, _arguments) {
+         var _argArray = Array.prototype.slice.call(_arguments), _result;
 
-        return typeof result === 'function' ? 
-          result.call(
-            self._inject[scope]._this,
-            Array.prototype.slice.call(self._inject[scope]._arguments)
-          ) : result;
-      } + ';self._inject[scope]._this = this'
-        + ';self._inject[scope]._arguments = arguments'
-      )
-      .replace(/scope/g, '"' + scope + '"');
+         return function(_block) {
+
+           function _internal() {
+             _result = eval('(' + _block + ')');
+             return 'function' === typeof _result ? 
+               _result.apply(_this, _argArray) : 
+               _result;
+           }
+
+           return _internal.apply(_this, _argArray);
+         }
+       }) + ')(this, arguments)'
   }
 })();
