@@ -26,20 +26,22 @@ var _inject = (function() {
 
       _inject(scopeIn, ( ix || 0 ) + 1) :
 
-      'self._inject["' + scope + '"] = (' + (function(_this, _arguments) {
-         var _argArray = Array.prototype.slice.call(_arguments), _result;
+      ('self._inject["' + scope + '"] = (' + (function() {
+         var _RAND_ = { 
+           that: arguments[0],
+           arg: Array.prototype.slice.call(arguments[1]) 
+         };
 
-         return function(_block) {
+         return function() {
+           _RAND_.block = arguments[0];
 
-           function _internal() {
-             _result = eval('(' + _block + ')');
-             return 'function' === typeof _result ? 
-               _result.apply(_this, _argArray) : 
-               _result;
-           }
-
-           return _internal.apply(_this, _argArray);
+           return (function () {
+             _RAND_.result = eval('(' + _RAND_.block + ')');
+             return 'function' === typeof _RAND_.result ? 
+               _RAND_.result.apply(_RAND_.that, _RAND_.arg) : 
+               _RAND_.result;
+           }).apply(_RAND_.that, _RAND_.arg);
          }
-       }) + ')(this, arguments)'
+       })).replace(/_RAND_/g, '__INJECT__' + Math.random().toString().substr(2)) + ')(this, arguments)';
   }
 })();
