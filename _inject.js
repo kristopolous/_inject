@@ -30,9 +30,13 @@ var _inject = (function() {
         var result = eval('(' + block + ')');
 
         return typeof result === 'function' ? 
-          result.call(self._inject[scope]._this) : 
-          result;
-      } + ';self._inject[scope]._this = this;')
+          result.call(
+            self._inject[scope]._this,
+            Array.prototype.slice.call(self._inject[scope]._arguments)
+          ) : result;
+      } + ';self._inject[scope]._this = this'
+        + ';self._inject[scope]._arguments = arguments'
+      )
       .replace(/scope/g, '"' + scope + '"');
   }
 })();
