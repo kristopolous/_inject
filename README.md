@@ -5,11 +5,6 @@ This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713
 You could view the demo.html, which has been conveniently placed here for observation
 
     function A (){
-      // Usually if you call a function from here, you have
-      // to pass apply or call in order to preserve the this object.
-      // It can get cludgeoned as you know and can often times be
-      // hard to get at with debugging tools.
-      //
       // This library preserve the this object in an eloquent manner
       // that requires next to nothing effort on your part and is available
       // for arbitrary real-time interactive inspection and manipulation
