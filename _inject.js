@@ -7,6 +7,12 @@ var _inject = (function() {
       ret.push(ref);
     }
 
+    ret.clear = function(){
+      for(ref in _inject) {
+        delete _inject[ref];
+      }
+    }
+
     return ret;
   }
 
