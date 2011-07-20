@@ -11,9 +11,9 @@ You could view the demo.html, which has been conveniently placed here for observ
       // hard to get at with debugging tools.
       this.pointer = 'internal-this';
 
-      // Normally this would be inaccessible outside of
-      // A. However, sometimes you need to inspect these variables
-      // and have the freedome to run arbitrary code on them.
+      // Normally the variable below would be inaccessible outside of
+      // A. However, sometimes you need to inspect a specific instance
+      // of these variables and need the freedom to run arbitrary code on them.
       // This library can do this.
       var internal = 1;
 
