@@ -14,12 +14,16 @@
       'Incrementing an internal variable: ' + _inject.ref('++internal'),
 
       // Display the arguments that were passed in in that specific instance
-      'Showing the function arguments: ' + _inject.ref("Array.prototype.slice.call(arguments).join(' :: ')"),
+      'Showing the function arguments: ' + _inject.ref(
+        "Array.prototype.slice.call(arguments).join(' :: ')"
+      ),
 
       // We can even pass in entire functions.  They will maintain the scope and
       // relevancy of the function; as if the code was run at the point of injection
       // at the time of injection.
-      'Injecting an entire function: ' + _inject.ref(function(){return Array.prototype.slice.call(arguments).join(' :: ')}),
+      'Injecting an entire function: ' + _inject.ref(function(){
+        return Array.prototype.slice.call(arguments).join(' :: ')
+      }),
 
       // Here we show how we've preserved the this pointer.
       'Showing that the this pointer is preserved: ' + _inject.ref('this.pointer'),
@@ -46,15 +50,15 @@
   // in the middle of a specific instantiation of any given function, 
   // anywhere in your application.
   (function (arg0, arg1){
-    // We also preserves the this object in an eloquent manner
+    // It also preserves the this object in an eloquent manner
     // that requires no extra effort on your part and is available
     // for arbitrary real-time interactive inspection and manipulation
     this.pointer = 'internal-this';
 
-    // Normally the variable below would be inaccessible outside of
-    // A. This library gives you the freedom inspect and manipulate a specific 
-    // instance of these variables and then utilize them in this exact
-    // context of the function.
+    // Normally the variable below would be inaccessible outside of this
+    // function. This library gives you the freedom inspect and manipulate a 
+    // specific instance of these variables and then utilize them in this 
+    // exact context of the function.
     var internal = 1;
 
     // To invoke the library, simply call something like:
