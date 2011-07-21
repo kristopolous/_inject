@@ -1,4 +1,11 @@
 ## Arbitrary code injection
+Imagine if you could create a hook inside a function in javascript that gives you a window into that instantiation.
+
+You could run arbitrary code using the `arguments` or the `this` object or any local variables that function had.
+
+You could run a function over again without a reload, essentially replaying all the code.
+
+#### thats what this does.
 
 This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713538/ruby-style-blocks-in-javascript)
 
