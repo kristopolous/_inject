@@ -5,7 +5,7 @@ You could run arbitrary code using the `arguments` or the `this` object or any l
 
 You could run a function over again without a reload, essentially replaying all the code.
 
-#### thats what this does.
+#### that is precisely what this library does.
 
 This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713538/ruby-style-blocks-in-javascript)
 
@@ -65,7 +65,7 @@ You could view the demo.html, which has been conveniently placed here for observ
       // context of the function.
       var internal = 1;
 
-      // To invoking the library, simply call something like:
+      // To invoke the library, simply call something like:
       eval(_inject('ref'));
 
       // After this is done, you've created a function at _inject.ref 
