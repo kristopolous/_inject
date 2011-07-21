@@ -10,6 +10,7 @@ You could run a function over again without a reload, essentially replaying all 
 This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713538/ruby-style-blocks-in-javascript)
 
 You could view the demo.html, which has been conveniently placed here for observation
+
     // Watch as we can execute specifically scoped code arbitrarily after
     // the function is done.
     function some_time_later() {
