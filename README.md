@@ -10,6 +10,43 @@ You could run a function over again without a reload, essentially replaying all 
 This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713538/ruby-style-blocks-in-javascript)
 
 You could view the demo.html, which has been conveniently placed here for observation
+    // Watch as we can execute specifically scoped code arbitrarily after
+    // the function is done.
+    function some_time_later() {
+
+      // Here we utilize the reference created below to do arbitrary things 
+      document.body.innerHTML += [
+
+        // We'll increment the internal variable, usually inaccessible.
+        'Incrementing an internal variable: ' + _inject.ref('++internal'),
+
+        // Display the arguments that were passed in in that specific instance
+        'Showing the function arguments: ' + _inject.ref("Array.prototype.slice.call(arguments).join(' :: ')"),
+
+        // We can even pass in entire functions.  They will maintain the scope and
+        // relevancy of the function; as if the code was run at the point of injection
+        // at the time of injection.
+        'Injecting an entire function: ' + _inject.ref(function(){return Array.prototype.slice.call(arguments).join(' :: ')}),
+
+        // Here we show how we've preserved the this pointer.
+        'Showing that the this pointer is preserved: ' + _inject.ref('this.pointer'),
+
+        // And now, all together: 
+        //
+        //  * a preserved this pointer 
+        //  * an internal variable
+        //  * an argument that was passed in
+        // 
+        // All in a normal function without any special work.
+        'A medley of features: ' + _inject.ref(function(){ 
+          return [
+            this.pointer, 
+            internal, 
+            arguments[0]
+          ].join(' :: ') 
+         })
+      ].join('<br>');
+    }
 
     // This library preserves function arguments so that you can write
     // live, on the fly code on a running system as if you are directly 
@@ -41,35 +78,7 @@ You could view the demo.html, which has been conveniently placed here for observ
 
     }) ( 'arg0', 'arg1' );
 
-    // Here we utilize the reference created above to do arbitrary things 
-    document.write([
+    some_time_later();
 
-      // We'll increment the internal variable, usually inaccessible.
-      'Incrementing an internal variable: ' + _inject.ref('++internal'),
+    setTimeout(some_time_later, 1000);
 
-      // Display the arguments that were passed in in that specific instance
-      'Showing the function arguments: ' + _inject.ref("Array.prototype.slice.call(arguments).join(' :: ')"),
-
-      // We can even pass in entire functions.  They will maintain the scope and
-      // relevancy of the function; as if the code was run at the point of injection
-      // at the time of injection.
-      'Injecting an entire function: ' + _inject.ref(function(){return Array.prototype.slice.call(arguments).join(' :: ')}),
-
-      // Here we show how we've preserved the this pointer.
-      'Showing that the this pointer is preserved: ' + _inject.ref('this.pointer'),
-
-      // And now, all together: 
-      //
-      //  * a preserved this pointer 
-      //  * an internal variable
-      //  * an argument that was passed in
-      // 
-      // All in a normal function without any special work.
-      'A medley of features: ' + _inject.ref(function(){ 
-        return [
-          this.pointer, 
-          internal, 
-          arguments[0]
-        ].join(' :: ') 
-       })
-    ].join('<br>'));
