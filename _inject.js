@@ -1,16 +1,13 @@
 var _inject = (function() {
 
   function list() {
-    var ret = [], ref;
+    var ret = {}, ref;
 
     for(ref in _inject) {
-      ret.push(ref);
-    }
-
-    ret.clear = function(){
-      for(ref in _inject) {
-        delete _inject[ref];
-      }
+      ret[ref] = {
+        timestamp: _inject[ref].timestamp,
+        linenumber: _inject[ref].stack
+      };
     }
 
     return ret;
@@ -29,23 +26,47 @@ var _inject = (function() {
       scope = scopeIn + ix++;
     }
 
-    return ('self._inject["' + scope + '"] = (' + (function() {
-       var _RAND_ = { 
+    return (
+       'try { arguments } catch(e) { arguments = [] } ' +
+       'self._inject["' + scope + '"] = (' + (function() {
+       var RAND = { 
          that: arguments[0],
          arg: Array.prototype.slice.call(arguments[1]) 
        };
+        
+       function RAND_callback() {
+         RAND.block = arguments[0];
 
-       return function() {
-         _RAND_.block = arguments[0];
+         return (function() {
+           RAND.result = eval('(' + RAND.block + ')');
 
-         return (function () {
-           _RAND_.result = eval('(' + _RAND_.block + ')');
-           return 'function' === typeof _RAND_.result ? 
-             _RAND_.result.apply(_RAND_.that, _RAND_.arg) : 
-             _RAND_.result;
-         }).apply(_RAND_.that, _RAND_.arg);
+           return 'function' === typeof RAND.result ? 
+             RAND.result.apply(RAND.that, RAND.arg) : 
+             RAND.result;
+
+         }).apply(RAND.that, RAND.arg);
        }
+
+       RAND_callback.timestamp = new Date();
+
+       try {
+         throw Error();
+       } catch(e){
+
+         if(e.stack) {
+
+           RAND_callback.stack = e.stack
+             .split('\n')[2]
+             .split(/@|> /)[1]
+             .replace(/[\)\(]/g,'');
+
+         } else if (e.lineNumber) {
+           RAND_callback.stack = e.lineNumber;
+         }
+       }
+
+       return RAND_callback;
      }) + ')(this, arguments)')
-     .replace(/_RAND_/g, '__INJECT__' + Math.random().toString().substr(2)) 
+     .replace(/RAND/g, '__INJECT__' + Math.random().toString().substr(2)) 
   }
 })();
