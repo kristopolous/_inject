@@ -5,6 +5,10 @@ You could run arbitrary code using the `arguments` or the `this` object or any l
 
 You could run a function over again without a reload, essentially replaying all the code.
 
+#### How it was built
+
+I've done a writeup on this library [available over here](http://9ol.es/HardcoreJS.html).
+
 #### that is precisely what this library does.
 
 This was talked about [on stackoverflow](http://stackoverflow.com/questions/6713538/ruby-style-blocks-in-javascript)
