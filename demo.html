@@ -6,6 +6,7 @@
   // Watch as we can execute specifically scoped code arbitrarily after
   // the function is done.
   function some_time_later() {
+    var internal = 0;
 
     // Here we utilize the reference created below to do arbitrary things 
     document.body.innerHTML += [

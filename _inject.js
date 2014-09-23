@@ -28,7 +28,7 @@ var _inject = (function() {
 
     return (
        'try { arguments } catch(e) { arguments = [] } ' +
-       'self._inject["' + scope + '"] = (' + (function() {
+       'self._inject["' + scope + '"] = (' + function() {
        var RAND = { 
          that: arguments[0],
          arg: Array.prototype.slice.call(arguments[1]) 
@@ -50,7 +50,7 @@ var _inject = (function() {
        RAND_callback.timestamp = new Date();
 
        try {
-         throw Error();
+         throw new Error();
        } catch(e){
 
          if(e.stack) {
@@ -66,7 +66,7 @@ var _inject = (function() {
        }
 
        return RAND_callback;
-     }) + ')(this, arguments)')
-     .replace(/RAND/g, '__INJECT__' + Math.random().toString().substr(2)) 
-  }
+     } + ')(this, arguments)')
+     .replace(/RAND/g, '__INJECT__' + Math.random().toString().substr(2));
+  };
 })();
