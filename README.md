@@ -1,4 +1,7 @@
 ## Arbitrary code injection
+
+** Note: Don't be scared off by the old date. Some tools are like hammers, they can get the job done and work well for years without any modification. **
+
 Imagine if you could create a hook inside a function in javascript that gives you a window into that instantiation.
 
 You could run arbitrary code using the `arguments` or the `this` object or any local variables that function had.
